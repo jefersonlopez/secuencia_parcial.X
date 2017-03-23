@@ -1,0 +1,81 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Wed Mar 22 21:19:29 2017
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000128
+                   .cinit    romdata   0x000094    program   0x000004
+.config_2007_BUILD/DEFAULT/PRODUCTION/MAIN_SE       code   0x002007    program   0x000002
+.config_2008_BUILD/DEFAULT/PRODUCTION/MAIN_SE       code   0x002008    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000095      
+                            0x002007    0x002008      
+            152 out of 8455 program addresses used, program memory utilization is 1%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                  CONFIG1   0x00001f    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\configuracion.inc
+             _.org_0_003C   0x00003c    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+             _.org_0_0046   0x000046    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+             _.org_0_004C   0x00004c    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+                    bucle   0x000050    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+                  bucle_2   0x000053    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+                  bucle_3   0x000055    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+           cargar_valores   0x00005f    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+                   ciclo1   0x000039    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+                   ciclo2   0x000037    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+                   inicio   0x000002    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\main_secuencia.asm
+                      op1   0x000013    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\main_secuencia.asm
+                      op2   0x000016    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\main_secuencia.asm
+                      op3   0x000019    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\main_secuencia.asm
+                      op4   0x00001c    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\main_secuencia.asm
+                 osc_conf   0x00001f    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\configuracion.inc
+                port_conf   0x000026    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\configuracion.inc
+            retardo_500ms   0x000048    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+             retardo_50ms   0x000042    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+              retardo_5ms   0x000035    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+                secuencia   0x00004e    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+                    tabla   0x000066    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+                   tabla2   0x00007d    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+         volver_verificar   0x000058    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                   inicio   0x000002    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\main_secuencia.asm
+                      op1   0x000013    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\main_secuencia.asm
+                      op2   0x000016    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\main_secuencia.asm
+                      op3   0x000019    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\main_secuencia.asm
+                      op4   0x00001c    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\main_secuencia.asm
+                 osc_conf   0x00001f    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\configuracion.inc
+                  CONFIG1   0x00001f    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\configuracion.inc
+                port_conf   0x000026    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\configuracion.inc
+              retardo_5ms   0x000035    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+                   ciclo2   0x000037    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+                   ciclo1   0x000039    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+             _.org_0_003C   0x00003c    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+             retardo_50ms   0x000042    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+             _.org_0_0046   0x000046    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+            retardo_500ms   0x000048    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+             _.org_0_004C   0x00004c    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\retardos.inc
+                secuencia   0x00004e    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+                    bucle   0x000050    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+                  bucle_2   0x000053    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+                  bucle_3   0x000055    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+         volver_verificar   0x000058    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+           cargar_valores   0x00005f    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+                    tabla   0x000066    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+                   tabla2   0x00007d    program     static C:\proyectos micro_c\secuencia_parcial\secuencia_parcial.X\secuencia.inc
+
+
