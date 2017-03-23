@@ -11,7 +11,13 @@ bucle_2:
 bucle_3:
     call    cargar_valores
     incf    pos_tabla
-    call    retardo_500ms
+    movf    PORTB,w
+    movwf   valor_secuencia
+    call    retardo_5ms
+    goto    comprobacion
+volver_comprobacion:
+    decfsz  valor_secuencia
+    goto    $-3   
 volver_verificar:
     decfsz  ciclos_secuencia
     goto    bucle_3
@@ -20,6 +26,13 @@ volver_verificar:
     decfsz  repeticiones
     goto    bucle
     return
+   
+comprobacion:
+    movlw   0x03
+    xorwf   PORTE,w
+    btfss   STATUS,Z
+    return
+    goto    volver_comprobacion
 
 cargar_valores:
     movf    pos_tabla,W
@@ -45,7 +58,7 @@ tabla:
     retlw   0XFC
     retlw   0XFE
     retlw   0X7F
-;segunda secuencia PORTD
+;segunda secuencia PORTC
     retlw   0X01
     retlw   0X02
     retlw   0X04
@@ -60,7 +73,7 @@ tabla:
 
 tabla2:
     addwf   PCL,F
-;primer secuencia
+;primer secuencia PORTD
     retlw   0x00
     retlw   0X00
     retlw   0X01
@@ -72,7 +85,7 @@ tabla2:
     retlw   0X01
     retlw   0X00
     retlw   0X00
-;segunda secuencia
+;segunda secuencia PORTD
     retlw   0X08
     retlw   0X04
     retlw   0X02

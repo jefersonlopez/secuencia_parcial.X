@@ -13,6 +13,9 @@ LIST p = 16f887
     ciclos_secuencia ;nuemro de ciclos por secuencia
     num_secuencias  ;numero de secuencias
     repeticiones    ;numero de veces que se repite la secuencia
+    valor_secuencia ;indica el retardo de la secuencia
+    corrimientos    ;indica cuantos corrimientos se haran
+    comprobaciones  ;variable usada para almacenar el resultado de verificacion
 
 
     endc
@@ -23,6 +26,7 @@ LIST p = 16f887
     
 inicio:
     
+revisar:
     movlw   0x00
     xorwf   PORTE,w
     btfsc   STATUS,Z
@@ -30,20 +34,21 @@ inicio:
     movlw   0x01
     xorwf   PORTE,w
     btfsc   STATUS,Z
-    call    secuencia
+    call    corrimiento_derecha
     movlw   0x02
     xorwf   PORTE,w
     btfsc   STATUS,Z
-    call    op3
+    call    corrimiento_izquierda
     movlw   0x03
     xorwf   PORTE,w
     btfsc   STATUS,Z
-    call    op4
+    call    secuencia
     goto    inicio
     
     op1:
-    movlw   0x01
+    movlw   0x00
     movwf   PORTC
+    movwf   PORTD
     return
     op2:
     movlw   0x0f
@@ -62,6 +67,7 @@ inicio:
 #include "configuracion.inc"
 #include "retardos.inc"
 #include "secuencia.inc"
+#include "corrimientos.inc"
     end
 
 

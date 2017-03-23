@@ -8,6 +8,7 @@
       <itemPath>configuracion.inc</itemPath>
       <itemPath>retardos.inc</itemPath>
       <itemPath>secuencia.inc</itemPath>
+      <itemPath>corrimientos.inc</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

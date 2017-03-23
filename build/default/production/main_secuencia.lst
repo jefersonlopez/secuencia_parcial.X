@@ -1,4 +1,4 @@
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE  1
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -30,65 +30,70 @@ Warning[205]: Found directive in column 1. (LIST)
   00000026            00013     ciclos_secuencia ;nuemro de ciclos por secuencia
   00000027            00014     num_secuencias  ;numero de secuencias
   00000028            00015     repeticiones    ;numero de veces que se repite la secuencia
-                      00016 
-                      00017 
-                      00018     endc
+  00000029            00016     valor_secuencia ;indica el retardo de la secuencia
+  0000002A            00017     corrimientos    ;indica cuantos corrimientos se haran
+  0000002B            00018     comprobaciones  ;variable usada para almacenar el resultado de verificacion
                       00019 
-                      00020     org .0
-0000   2???           00021     call osc_conf   ;configura el oscilador
-0001   2???           00022     call port_conf  ;configura los puertos
-                      00023     
-0002                  00024 inicio:
-                      00025     
-0002   3000           00026     movlw   0x00
-0003   0609           00027     xorwf   PORTE,w
-0004   1903           00028     btfsc   STATUS,Z
-0005   2???           00029     call    op1
-0006   3001           00030     movlw   0x01
-0007   0609           00031     xorwf   PORTE,w
-0008   1903           00032     btfsc   STATUS,Z
-0009   2???           00033     call    secuencia
-000A   3002           00034     movlw   0x02
-000B   0609           00035     xorwf   PORTE,w
-000C   1903           00036     btfsc   STATUS,Z
-000D   2???           00037     call    op3
-000E   3003           00038     movlw   0x03
-000F   0609           00039     xorwf   PORTE,w
-0010   1903           00040     btfsc   STATUS,Z
-0011   2???           00041     call    op4
-0012   2???           00042     goto    inicio
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE  2
+                      00020 
+                      00021     endc
+                      00022 
+                      00023     org .0
+0000   2???           00024     call osc_conf   ;configura el oscilador
+0001   2???           00025     call port_conf  ;configura los puertos
+                      00026     
+0002                  00027 inicio:
+                      00028     
+0002                  00029 revisar:
+0002   3000           00030     movlw   0x00
+0003   0609           00031     xorwf   PORTE,w
+0004   1903           00032     btfsc   STATUS,Z
+0005   2???           00033     call    op1
+0006   3001           00034     movlw   0x01
+0007   0609           00035     xorwf   PORTE,w
+0008   1903           00036     btfsc   STATUS,Z
+0009   2???           00037     call    corrimiento_derecha
+000A   3002           00038     movlw   0x02
+000B   0609           00039     xorwf   PORTE,w
+000C   1903           00040     btfsc   STATUS,Z
+000D   2???           00041     call    corrimiento_izquierda
+000E   3003           00042     movlw   0x03
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00043     
+000F   0609           00043     xorwf   PORTE,w
+0010   1903           00044     btfsc   STATUS,Z
+0011   2???           00045     call    secuencia
+0012   2???           00046     goto    inicio
+                      00047     
 Warning[207]: Found label after column 1. (op1)
-0013                  00044     op1:
-0013   3001           00045     movlw   0x01
-0014   0087           00046     movwf   PORTC
-0015   0008           00047     return
+0013                  00048     op1:
+0013   3000           00049     movlw   0x00
+0014   0087           00050     movwf   PORTC
+0015   0088           00051     movwf   PORTD
+0016   0008           00052     return
 Warning[207]: Found label after column 1. (op2)
-0016                  00048     op2:
-0016   300F           00049     movlw   0x0f
-0017   0087           00050     movwf   PORTC
-0018   0008           00051     return
+0017                  00053     op2:
+0017   300F           00054     movlw   0x0f
+0018   0087           00055     movwf   PORTC
+0019   0008           00056     return
 Warning[207]: Found label after column 1. (op3)
-0019                  00052     op3:
-0019   30F0           00053     movlw   0xf0
-001A   0087           00054     movwf   PORTC
-001B   0008           00055     return
+001A                  00057     op3:
+001A   30F0           00058     movlw   0xf0
+001B   0087           00059     movwf   PORTC
+001C   0008           00060     return
 Warning[207]: Found label after column 1. (op4)
-001C                  00056     op4:
-001C   30FF           00057     movlw   0xff
-001D   0087           00058     movwf   PORTC
-001E   0008           00059     return
-                      00060     
-                      00061 
-                      00062 #include "configuracion.inc"
+001D                  00061     op4:
+001D   30FF           00062     movlw   0xff
+001E   0087           00063     movwf   PORTC
+001F   0008           00064     return
+                      00065     
+                      00066 
+                      00067 #include "configuracion.inc"
 Warning[207]: Found label after column 1. (CONFIG1)
-001F                  00001  CONFIG1
+0020                  00001  CONFIG1
                       00002     ; __config 0xE3F4
 2007   23F4           00003      __CONFIG _CONFIG1, _FOSC_INTRC_NOCLKOUT & _WDTE_OFF & _PWRTE_OFF & _MCLRE_ON & _CP_OFF & _CPD_OFF &
                              _BOREN_ON & _IESO_OFF & _FCMEN_OFF & _LVP_OFF
@@ -111,210 +116,325 @@ Message[310]: Superseding current maximum RAM and RAM map.
                       01620         LIST
                       00010 
                       00011 ; CONFIG1
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
                       00012 ; __config 0xFFF2
                       00013 ; __CONFIG _CONFIG1, _FOSC_HS & _WDTE_OFF & _PWRTE_OFF & _MCLRE_ON & _CP_OFF & _CPD_OFF & _BOREN_ON & _I
                             ESO_ON & _FCMEN_ON & _LVP_ON
                       00014 ; CONFIG2
                       00015 ; __config 0xFFFF
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE  3
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
                       00016 ; __CONFIG _CONFIG2, _BOR4V_BOR40V & _WRT_OFF
                       00017 
-001F                  00018 osc_conf:
-001F   1683           00019     bsf STATUS,RP0
-0020   1303           00020     bcf STATUS,RP1
-0021   30F1           00021     movlw   0xf1    
-0022   308F           00022     movlw   OSCCON
-0023   1283 1303      00023     banksel PORTA
-0025   0008           00024     return
+0020                  00018 osc_conf:
+0020   1683           00019     bsf STATUS,RP0
+0021   1303           00020     bcf STATUS,RP1
+0022   30F1           00021     movlw   0xf1    
+0023   308F           00022     movlw   OSCCON
+0024   1283 1303      00023     banksel PORTA
+0026   0008           00024     return
                       00025 
-0026                  00026 port_conf:
-0026   1683 1303      00027     banksel TRISA
-0028   30FF           00028     movlw b'11111111'
+0027                  00026 port_conf:
+0027   1683 1303      00027     banksel TRISA
+0029   30FF           00028     movlw b'11111111'
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0029   0085           00029     movwf TRISA
+002A   0085           00029     movwf TRISA
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-002A   0086           00030     movwf TRISB
+002B   0086           00030     movwf TRISB
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-002B   0187           00031     clrf  TRISC
+002C   0187           00031     clrf  TRISC
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-002C   0188           00032     clrf  TRISD
-002D   300F           00033     movlw b'00001111'
+002D   0188           00032     clrf  TRISD
+002E   300F           00033     movlw b'00001111'
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-002E   0089           00034     movwf TRISE
-002F   1703           00035     bsf   STATUS,RP1
+002F   0089           00034     movwf TRISE
+0030   1703           00035     bsf   STATUS,RP1
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0030   0188           00036     clrf  ANSEL
+0031   0188           00036     clrf  ANSEL
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0031   0189           00037     clrf  ANSELH
+0032   0189           00037     clrf  ANSELH
                       00038 ;   leer y escribir de los puertos
-0032   1283           00039     bcf STATUS,RP0
-0033   1303           00040     bcf STATUS,RP1
+0033   1283           00039     bcf STATUS,RP0
+0034   1303           00040     bcf STATUS,RP1
                       00041 
-0034   0008           00042     return
+0035   0008           00042     return
                       00043 
                       00044 
-                      00063 #include "retardos.inc"
-0035                  00001 retardo_5ms:
-0035   3014           00002     movlw .20   ;   1
-0036   00A0           00003     movwf cont1 ;   1
-0037                  00004 ciclo2:
-0037   3008           00005     movlw .8   ;   1
-0038   00A1           00006     movwf cont2 ;   1
-0039                  00007 ciclo1:
-0039   3013           00008     movlw .19   ;   1
-003A   00A2           00009     movwf cont3 ;   1
+                      00068 #include "retardos.inc"
+0036                  00001 retardo_5ms:
+0036   3014           00002     movlw .20   ;   1   A
+0037   00A0           00003     movwf cont1 ;   1
+0038                  00004 ciclo2:
+0038   3008           00005     movlw .8    ;   1   B
+0039   00A1           00006     movwf cont2 ;   1
+003A                  00007 ciclo1:
+003A   3013           00008     movlw .19   ;   1   C
+003B   00A2           00009     movwf cont3 ;   1
 Message[305]: Using default destination of 1 (file).
-003B   0BA2           00010     decfsz cont3;   1(2)
-003C   2???           00011     goto $-1    ;   2
-Message[305]: Using default destination of 1 (file).
-003D   0BA1           00012     decfsz cont2;   1(2)
-003E   2???           00013     goto ciclo1 ;   2
-Message[305]: Using default destination of 1 (file).
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE  4
+003C   0BA2           00010     decfsz cont3;   1(2)
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-003F   0BA0           00014     decfsz cont1;   1(2)
-0040   2???           00015     goto ciclo2 ;   2
-0041   0008           00016     return
-                      00017 
-0042                  00018 retardo_50ms:
-0042   3014           00019     movlw   .20
-0043   00A4           00020     movwf   cont_seg
-0044   2???           00021     call    retardo_5ms
+003D   2???           00011     goto $-1    ;   2
 Message[305]: Using default destination of 1 (file).
-0045   0BA4           00022     decfsz  cont_seg
-0046   2???           00023     goto    $-2
-0047   0008           00024     return
+003E   0BA1           00012     decfsz cont2;   1(2)
+003F   2???           00013     goto ciclo1 ;   2
+Message[305]: Using default destination of 1 (file).
+0040   0BA0           00014     decfsz cont1;   1(2)
+0041   2???           00015     goto ciclo2 ;   2
+0042   0008           00016     return
+                      00017     
+0043                  00018 retardo_25ms:
+0043   300A           00019     movlw   .10
+0044   00A4           00020     movwf   cont_seg
+0045   2???           00021     call    retardo_5ms
+Message[305]: Using default destination of 1 (file).
+0046   0BA4           00022     decfsz  cont_seg
+0047   2???           00023     goto    $-2
+0048   0008           00024     return
                       00025 
-0048                  00026 retardo_500ms:
-0048   3064           00027     movlw   .100
-0049   00A4           00028     movwf   cont_seg
-004A   2???           00029     call    retardo_5ms
+0049                  00026 retardo_50ms:
+0049   3014           00027     movlw   .20
+004A   00A4           00028     movwf   cont_seg
+004B   2???           00029     call    retardo_5ms
 Message[305]: Using default destination of 1 (file).
-004B   0BA4           00030     decfsz  cont_seg
-004C   2???           00031     goto    $-2
-004D   0008           00032     return
+004C   0BA4           00030     decfsz  cont_seg
+004D   2???           00031     goto    $-2
+004E   0008           00032     return
                       00033 
-                      00034 
-                      00035 
+004F                  00034 retardo_500ms:
+004F   3064           00035     movlw   .100
+0050   00A4           00036     movwf   cont_seg
+0051   2???           00037     call    retardo_5ms
+Message[305]: Using default destination of 1 (file).
+0052   0BA4           00038     decfsz  cont_seg
+0053   2???           00039     goto    $-2
+0054   0008           00040     return
+                      00041 
+                      00042 
+                      00043 
+                      00044 
+                      00069 #include "secuencia.inc"
+0055                  00001 secuencia:
+0055   3002           00002     movlw   .2
+0056   00A8           00003     movwf   repeticiones
+0057                  00004 bucle:
+0057   01A5           00005     clrf    pos_tabla
+0058   3002           00006     movlw   .2
+0059   00A7           00007     movwf   num_secuencias
+005A                  00008 bucle_2:
+005A   300B           00009     movlw   .11
+005B   00A6           00010     movwf   ciclos_secuencia
+005C                  00011 bucle_3:
+005C   2???           00012     call    cargar_valores
+Message[305]: Using default destination of 1 (file).
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+005D   0AA5           00013     incf    pos_tabla
+005E   0806           00014     movf    PORTB,w
+005F   00A9           00015     movwf   valor_secuencia
+0060   2???           00016     call    retardo_5ms
+0061   2???           00017     goto    comprobacion
+0062                  00018 volver_comprobacion:
+Message[305]: Using default destination of 1 (file).
+0062   0BA9           00019     decfsz  valor_secuencia
+0063   2???           00020     goto    $-3   
+0064                  00021 volver_verificar:
+Message[305]: Using default destination of 1 (file).
+0064   0BA6           00022     decfsz  ciclos_secuencia
+0065   2???           00023     goto    bucle_3
+Message[305]: Using default destination of 1 (file).
+0066   0BA7           00024     decfsz  num_secuencias
+0067   2???           00025     goto    bucle_2
+Message[305]: Using default destination of 1 (file).
+0068   0BA8           00026     decfsz  repeticiones
+0069   2???           00027     goto    bucle
+006A   0008           00028     return
+                      00029    
+006B                  00030 comprobacion:
+006B   3003           00031     movlw   0x03
+006C   0609           00032     xorwf   PORTE,w
+006D   1D03           00033     btfss   STATUS,Z
+006E   0008           00034     return
+006F   2???           00035     goto    volver_comprobacion
                       00036 
-                      00064 #include "secuencia.inc"
-004E                  00001 secuencia:
-004E   3002           00002     movlw   .2
-004F   00A8           00003     movwf   repeticiones
-0050                  00004 bucle:
-0050   01A5           00005     clrf    pos_tabla
-0051   3002           00006     movlw   .2
-0052   00A7           00007     movwf   num_secuencias
-0053                  00008 bucle_2:
-0053   300B           00009     movlw   .11
-0054   00A6           00010     movwf   ciclos_secuencia
-0055                  00011 bucle_3:
-0055   2???           00012     call    cargar_valores
-Message[305]: Using default destination of 1 (file).
-0056   0AA5           00013     incf    pos_tabla
-0057   2???           00014     call    retardo_500ms
-0058                  00015 volver_verificar:
-Message[305]: Using default destination of 1 (file).
-0058   0BA6           00016     decfsz  ciclos_secuencia
-0059   2???           00017     goto    bucle_3
-Message[305]: Using default destination of 1 (file).
-005A   0BA7           00018     decfsz  num_secuencias
-005B   2???           00019     goto    bucle_2
-Message[305]: Using default destination of 1 (file).
-005C   0BA8           00020     decfsz  repeticiones
-005D   2???           00021     goto    bucle
-005E   0008           00022     return
-                      00023 
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE  5
+0070                  00037 cargar_valores:
+0070   0825           00038     movf    pos_tabla,W
+0071   2???           00039     call    tabla
+0072   0087           00040     movwf   PORTC
+0073   0825           00041     movf    pos_tabla,W
+0074   2???           00042     call    tabla2
+0075   0088           00043     movwf   PORTD
+0076   0008           00044     return
+                      00045 
+                      00046 
+0077                  00047 tabla:
+0077   0782           00048     addwf   PCL,F
+                      00049 ;primer secuencia PORTC
+0078   347F           00050     retlw   0x7F
+0079   34FE           00051     retlw   0XFE
+007A   34FC           00052     retlw   0XFC
+007B   34F8           00053     retlw   0XF8
+007C   34F0           00054     retlw   0XF0
+007D   34E0           00055     retlw   0XE0
+007E   34F0           00056     retlw   0XF0
+007F   34F8           00057     retlw   0XF8
+0080   34FC           00058     retlw   0XFC
+0081   34FE           00059     retlw   0XFE
+0082   347F           00060     retlw   0X7F
+                      00061 ;segunda secuencia PORTC
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-005F                  00024 cargar_valores:
-005F   0825           00025     movf    pos_tabla,W
-0060   2???           00026     call    tabla
-0061   0087           00027     movwf   PORTC
-0062   0825           00028     movf    pos_tabla,W
-0063   2???           00029     call    tabla2
-0064   0088           00030     movwf   PORTD
-0065   0008           00031     return
-                      00032 
-                      00033 
-0066                  00034 tabla:
-0066   0782           00035     addwf   PCL,F
-                      00036 ;primer secuencia PORTC
-0067   347F           00037     retlw   0x7F
-0068   34FE           00038     retlw   0XFE
-0069   34FC           00039     retlw   0XFC
-006A   34F8           00040     retlw   0XF8
-006B   34F0           00041     retlw   0XF0
-006C   34E0           00042     retlw   0XE0
-006D   34F0           00043     retlw   0XF0
-006E   34F8           00044     retlw   0XF8
-006F   34FC           00045     retlw   0XFC
-0070   34FE           00046     retlw   0XFE
-0071   347F           00047     retlw   0X7F
-                      00048 ;segunda secuencia PORTD
-0072   3401           00049     retlw   0X01
-0073   3402           00050     retlw   0X02
-0074   3404           00051     retlw   0X04
-0075   3408           00052     retlw   0X08
-0076   3490           00053     retlw   0X90
-0077   3460           00054     retlw   0X60
-0078   3490           00055     retlw   0X90
-0079   3408           00056     retlw   0X08
-007A   3404           00057     retlw   0X04
-007B   3402           00058     retlw   0X02
-007C   3401           00059     retlw   0X01
-                      00060 
-007D                  00061 tabla2:
-007D   0782           00062     addwf   PCL,F
-                      00063 ;primer secuencia
-007E   3400           00064     retlw   0x00
-007F   3400           00065     retlw   0X00
-0080   3401           00066     retlw   0X01
-0081   3403           00067     retlw   0X03
-0082   3407           00068     retlw   0X07
-0083   340F           00069     retlw   0X0F
-0084   3407           00070     retlw   0X07
-0085   3403           00071     retlw   0X03
-0086   3401           00072     retlw   0X01
-0087   3400           00073     retlw   0X00
-0088   3400           00074     retlw   0X00
-                      00075 ;segunda secuencia
-0089   3408           00076     retlw   0X08
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE  6
+0083   3401           00062     retlw   0X01
+0084   3402           00063     retlw   0X02
+0085   3404           00064     retlw   0X04
+0086   3408           00065     retlw   0X08
+0087   3490           00066     retlw   0X90
+0088   3460           00067     retlw   0X60
+0089   3490           00068     retlw   0X90
+008A   3408           00069     retlw   0X08
+008B   3404           00070     retlw   0X04
+008C   3402           00071     retlw   0X02
+008D   3401           00072     retlw   0X01
+                      00073 
+008E                  00074 tabla2:
+008E   0782           00075     addwf   PCL,F
+                      00076 ;primer secuencia PORTD
+008F   3400           00077     retlw   0x00
+0090   3400           00078     retlw   0X00
+0091   3401           00079     retlw   0X01
+0092   3403           00080     retlw   0X03
+0093   3407           00081     retlw   0X07
+0094   340F           00082     retlw   0X0F
+0095   3407           00083     retlw   0X07
+0096   3403           00084     retlw   0X03
+0097   3401           00085     retlw   0X01
+0098   3400           00086     retlw   0X00
+0099   3400           00087     retlw   0X00
+                      00088 ;segunda secuencia PORTD
+009A   3408           00089     retlw   0X08
+009B   3404           00090     retlw   0X04
+009C   3402           00091     retlw   0X02
+009D   3401           00092     retlw   0X01
+009E   3400           00093     retlw   0X00
+009F   3400           00094     retlw   0X00
+00A0   3400           00095     retlw   0X00
+00A1   3401           00096     retlw   0X01
+00A2   3402           00097     retlw   0X02
+00A3   3404           00098     retlw   0X04
+00A4   3408           00099     retlw   0X08
+                      00100     
+                      00101    
+                      00102 
+                      00103 
+                      00070 #include "corrimientos.inc"
+00A5                  00001 corrimiento_derecha:
+00A5   1003           00002     bcf     STATUS,C
+00A6   3010           00003     movlw   .16
+00A7   00AA           00004     movwf   corrimientos
+00A8   3000           00005     movlw   0x00
+00A9   0087           00006     movwf   PORTC
+00AA   3080           00007     movlw   0x80
+00AB   0088           00008     movwf   PORTD
+Warning[207]: Found label after column 1. (p_d)
+00AC                  00009     p_d:
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-008A   3404           00077     retlw   0X04
-008B   3402           00078     retlw   0X02
-008C   3401           00079     retlw   0X01
-008D   3400           00080     retlw   0X00
-008E   3400           00081     retlw   0X00
-008F   3400           00082     retlw   0X00
-0090   3401           00083     retlw   0X01
-0091   3402           00084     retlw   0X02
-0092   3404           00085     retlw   0X04
-0093   3408           00086     retlw   0X08
-                      00087     
-                      00088    
-                      00089 
-                      00090 
-23F4 3EFF             00065     end
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE  7
+00AC   0806           00010     movf    PORTB,w
+00AD   00A9           00011     movwf   valor_secuencia
+00AE   2???           00012     call    retardo_5ms
+00AF   2???           00013     call    com
+00B0   1CAB           00014     btfss   comprobaciones,1
+00B1   0008           00015     return
+Message[305]: Using default destination of 1 (file).
+00B2   0BA9           00016     decfsz  valor_secuencia
+00B3   2???           00017     goto    $-5
+Message[305]: Using default destination of 1 (file).
+00B4   0C88           00018     rrf     PORTD
+Message[305]: Using default destination of 1 (file).
+00B5   0C87           00019     rrf     PORTC
+Message[305]: Using default destination of 1 (file).
+00B6   0BAA           00020     decfsz  corrimientos
+00B7   2???           00021     goto    p_d
+00B8   0008           00022     return
+                      00023     
+00B9                  00024 corrimiento_izquierda:
+00B9   1003           00025     bcf     STATUS,C
+00BA   3010           00026     movlw   .16
+00BB   00AA           00027     movwf   corrimientos
+00BC   3001           00028     movlw   0x01
+00BD   0087           00029     movwf   PORTC
+00BE   3000           00030     movlw   0x00
+00BF   0088           00031     movwf   PORTD
+Warning[207]: Found label after column 1. (p_i)
+00C0                  00032     p_i:
+00C0   0806           00033     movf    PORTB,w
+00C1   00A9           00034     movwf   valor_secuencia
+00C2   2???           00035     call    retardo_5ms
+00C3   2???           00036     call    com
+00C4   1D2B           00037     btfss   comprobaciones,2
+00C5   0008           00038     return
+Message[305]: Using default destination of 1 (file).
+00C6   0BA9           00039     decfsz  valor_secuencia
+00C7   2???           00040     goto    $-5
+Message[305]: Using default destination of 1 (file).
+00C8   0D87           00041     rlf     PORTC
+Message[305]: Using default destination of 1 (file).
+00C9   0D88           00042     rlf     PORTD
+Message[305]: Using default destination of 1 (file).
+00CA   0BAA           00043     decfsz  corrimientos
+00CB   2???           00044     goto    p_i
+00CC   0008           00045     return
+                      00046    
+00CD                  00047 com:
+00CD   01AB           00048     clrf    comprobaciones
+00CE   3000           00049     movlw   0x00
+00CF   0609           00050     xorwf   PORTE,w
+00D0   1903           00051     btfsc   STATUS,Z
+00D1   142B           00052     bsf     comprobaciones,0
+00D2   3001           00053     movlw   0x01
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00D3   0609           00054     xorwf   PORTE,w
+00D4   1903           00055     btfsc   STATUS,Z
+00D5   14AB           00056     bsf     comprobaciones,1
+00D6   3002           00057     movlw   0x02
+00D7   0609           00058     xorwf   PORTE,w
+00D8   1903           00059     btfsc   STATUS,Z
+00D9   152B           00060     bsf     comprobaciones,2
+00DA   3003           00061     movlw   0x03
+00DB   0609           00062     xorwf   PORTE,w
+00DC   1903           00063     btfsc   STATUS,Z
+00DD   15AB           00064     bsf     comprobaciones,3
+00DE   0008           00065     return
+                      00066     
+                      00067     
+                      00068 
+                      00069 
+23F4 3EFF             00071     end
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE  9
 
 
 SYMBOL TABLE
@@ -373,7 +493,7 @@ BRG6                              00000006
 BRG7                              00000007
 BRG8                              00000000
 BRG9                              00000001
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE  8
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE 10
 
 
 SYMBOL TABLE
@@ -432,7 +552,7 @@ CHS0                              00000002
 CHS1                              00000003
 CHS2                              00000004
 CHS3                              00000005
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE  9
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE 11
 
 
 SYMBOL TABLE
@@ -443,7 +563,7 @@ CKP                               00000004
 CM1CON0                           00000107
 CM2CON0                           00000108
 CM2CON1                           00000109
-CONFIG1                           0000001F
+CONFIG1                           00000020
 CREN                              00000004
 CSRC                              00000007
 D                                 00000005
@@ -491,7 +611,7 @@ INTEDG                            00000006
 INTF                              00000001
 IOCB                              00000096
 IOCB0                             00000000
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE 10
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE 12
 
 
 SYMBOL TABLE
@@ -550,7 +670,7 @@ PCON                              0000008E
 PDC0                              00000000
 PDC1                              00000001
 PDC2                              00000002
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE 11
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE 13
 
 
 SYMBOL TABLE
@@ -609,7 +729,7 @@ RC1                               00000001
 RC2                               00000002
 RC3                               00000003
 RC4                               00000004
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE 12
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE 14
 
 
 SYMBOL TABLE
@@ -668,7 +788,7 @@ SSPCON                            00000014
 SSPCON2                           00000091
 SSPEN                             00000005
 SSPIE                             00000003
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE 13
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE 15
 
 
 SYMBOL TABLE
@@ -727,7 +847,7 @@ TOUTPS2                           00000005
 TOUTPS3                           00000006
 TRISA                             00000085
 TRISA0                            00000000
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE 14
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE 16
 
 
 SYMBOL TABLE
@@ -786,7 +906,7 @@ TXEN                              00000005
 TXIE                              00000004
 TXIF                              00000004
 TXREG                             00000019
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE 15
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE 17
 
 
 SYMBOL TABLE
@@ -829,9 +949,13 @@ WREN                              00000002
 WRERR                             00000003
 WUE                               00000001
 Z                                 00000002
-_.org_0_003C                      0000003C
-_.org_0_0046                      00000046
-_.org_0_004C                      0000004C
+_.org_0_003D                      0000003D
+_.org_0_0047                      00000047
+_.org_0_004D                      0000004D
+_.org_0_0053                      00000053
+_.org_0_0063                      00000063
+_.org_0_00B3                      000000B3
+_.org_0_00C7                      000000C7
 _BOR21V                           00003EFF
 _BOR40V                           00003FFF
 _BOR4V_BOR21V                     00003EFF
@@ -841,16 +965,16 @@ _BOREN_OFF                        00003CFF
 _BOREN_ON                         00003FFF
 _BOREN_SBODEN                     00003DFF
 _BOR_NSLEEP                       00003EFF
-_BOR_OFF                          00003CFF
-_BOR_ON                           00003FFF
-_BOR_SBODEN                       00003DFF
-_CONFIG1                          00002007
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE 16
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE 18
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_BOR_OFF                          00003CFF
+_BOR_ON                           00003FFF
+_BOR_SBODEN                       00003DFF
+_CONFIG1                          00002007
 _CONFIG2                          00002008
 _CPD_OFF                          00003FFF
 _CPD_ON                           00003F7F
@@ -900,46 +1024,58 @@ _WRT_1FOURTH                      00003BFF
 _WRT_256                          00003DFF
 _WRT_HALF                         000039FF
 _WRT_OFF                          00003FFF
-_XT_OSC                           00003FF9
-__16F887                          00000001
-bucle                             00000050
-bucle_2                           00000053
-MPASM 5.72                MAIN_SECUENCIA.ASM   3-22-2017  21:19:27         PAGE 17
+MPASM 5.72                MAIN_SECUENCIA.ASM   3-23-2017  0:03:07         PAGE 19
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-bucle_3                           00000055
-cargar_valores                    0000005F
-ciclo1                            00000039
-ciclo2                            00000037
+_XT_OSC                           00003FF9
+__16F887                          00000001
+bucle                             00000057
+bucle_2                           0000005A
+bucle_3                           0000005C
+cargar_valores                    00000070
+ciclo1                            0000003A
+ciclo2                            00000038
 ciclos_secuencia                  00000026
+com                               000000CD
+comprobacion                      0000006B
+comprobaciones                    0000002B
 cont1                             00000020
 cont2                             00000021
 cont3                             00000022
 cont_seg                          00000024
+corrimiento_derecha               000000A5
+corrimiento_izquierda             000000B9
+corrimientos                      0000002A
 inicio                            00000002
 num_secuencias                    00000027
 op1                               00000013
-op2                               00000016
-op3                               00000019
-op4                               0000001C
-osc_conf                          0000001F
-port_conf                         00000026
+op2                               00000017
+op3                               0000001A
+op4                               0000001D
+osc_conf                          00000020
+p_d                               000000AC
+p_i                               000000C0
+port_conf                         00000027
 pos_tabla                         00000025
 repeticiones                      00000028
 retardo                           00000023
-retardo_500ms                     00000048
-retardo_50ms                      00000042
-retardo_5ms                       00000035
-secuencia                         0000004E
-tabla                             00000066
-tabla2                            0000007D
-volver_verificar                  00000058
+retardo_25ms                      00000043
+retardo_500ms                     0000004F
+retardo_50ms                      00000049
+retardo_5ms                       00000036
+revisar                           00000002
+secuencia                         00000055
+tabla                             00000077
+tabla2                            0000008E
+valor_secuencia                   00000029
+volver_comprobacion               00000062
+volver_verificar                  00000064
 
 Errors   :     0
-Warnings :     6 reported,     0 suppressed
-Messages :    17 reported,     0 suppressed
+Warnings :     8 reported,     0 suppressed
+Messages :    27 reported,     0 suppressed
 
 
